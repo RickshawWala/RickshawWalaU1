@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "1093934784656",
+    "firebase_url": "https://rickshawala-83654.firebaseio.com",
+    "project_id": "rickshawala-83654",
+    "storage_bucket": "rickshawala-83654.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093934784656:android:fab892bc64bbe953",
+        "android_client_info": {
+          "package_name": "com.aliv3.rickshawalauser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093934784656-c4dl2tqe70962qu792gmhfve79b318bk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aliv3.rickshawalauser",
+            "certificate_hash": "cdbffc2ff720a09295a5b9dfa9c3314e551e1c62"
+          }
+        },
+        {
+          "client_id": "1093934784656-hqsp34lcs519mnpbpfflkauc6cgruuk1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aliv3.rickshawalauser",
+            "certificate_hash": "6cd38a7d80b61f80205eb8ec815078e639930102"
+          }
+        },
+        {
+          "client_id": "1093934784656-f0nl7q10617d1kcjh85195pmrf69411u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcJOC5jP2pvRaDP7GpWSP9rpCQxmS_hcg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093934784656-f0nl7q10617d1kcjh85195pmrf69411u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
