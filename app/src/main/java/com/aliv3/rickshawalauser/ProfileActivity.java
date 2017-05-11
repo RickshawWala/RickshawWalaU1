@@ -35,26 +35,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         //print to log
         System.out.println("\n\n\n\t\tPROFILE ACTIVITY \n\n\n");
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        if(firebaseAuth.getCurrentUser() == null){
-            finish();
-            startActivity(new Intent(this, LoginActivity.class));
-        }
-
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         Name = (EditText) findViewById(R.id.editname);
         Phone = (EditText) findViewById(R.id.editphone);
         SaveInfo = (Button) findViewById(R.id.buttonSaveinfo);
 
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
         Textprofile = (TextView) findViewById(R.id.textViewprofile);
-
-        Textprofile.setText("Welcome "+user.getEmail());
-
 
         Logout = (Button) findViewById(R.id.buttonlogout);
 
