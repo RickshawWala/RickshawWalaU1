@@ -46,7 +46,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        //print to log
         System.out.println("\n\n\n\t\tMAPS ACTIVITY \n\n\n");
 
         askPermission(android.Manifest.permission.ACCESS_FINE_LOCATION, LOCATION_REQUEST_CODE);
@@ -124,9 +123,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         switch (requestCode){
             case LOCATION_REQUEST_CODE:
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(this, "Location permission granted!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "Location permission granted!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "Location permission denied!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "Location permission denied!", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

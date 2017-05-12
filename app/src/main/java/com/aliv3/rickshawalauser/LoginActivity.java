@@ -11,7 +11,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -19,24 +30,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText Email;
     private EditText Password;
     private TextView Register;
-
-    private FirebaseAuth firebaseAuth;
     private ProgressDialog ProgressDialog;
-
+    private final OkHttpClient client = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //print to log
         System.out.println("\n\n\n\t\tLOGIN ACTIVITY \n\n\n");
 
         Email = (EditText) findViewById(R.id.editsignemail);
         Password = (EditText) findViewById(R.id.editsignpassword);
         Login = (Button) findViewById(R.id.buttonlogin);
         Register = (TextView) findViewById(R.id.textregister);
-
         ProgressDialog = new ProgressDialog(this);
 
         Login.setOnClickListener(this);
@@ -62,11 +69,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //stops the function from executing further
             return;
         }
-        //if validations are ok
-        // we will show progress dialog
 
         ProgressDialog.setMessage("Signing In...");
         ProgressDialog.show();
+
+        try {
+            postGetToken(email, password, "http://139.59.70.223/api/auth/token");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -84,5 +95,68 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         {
             startActivity(new Intent(this,RegisterActivity.class));
         }
+    }
+    private void postGetToken(String username, String password, String url) throws IOException, IllegalArgumentException {
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody formBody = new FormBody.Builder()
+                .add("username", username)
+                .add("password", password)
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .build();
+
+        client.newCall(request)
+                .enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(LoginActivity.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String jsonResponse = response.body().string();
+//                        Log.d("RESPONSE", res);
+                        JSONObject jsonObject;
+                        try {
+                            jsonObject = new JSONObject(jsonResponse);
+                            String error = "", accessToken = "", refreshToken = "";
+                            if(jsonObject.has("error")) {
+                                error = jsonObject.getString("message");
+                            } else if(jsonObject.has("access_token")) {
+                                accessToken = jsonObject.getString("access_token");
+                                refreshToken = jsonObject.getString("refresh_token");
+                            }
+                            uiHandle(error, accessToken, refreshToken);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+    private void uiHandle(final String error, final String accessToken, final String refreshToken) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(error != "") {
+                    Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();
+                } else if (accessToken != "") {
+                    Toast.makeText(LoginActivity.this, accessToken, Toast.LENGTH_SHORT).show();
+
+                    //Go to map after saving details
+                    Intent i = new Intent(LoginActivity.this, MapsActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            }
+        });
     }
 }

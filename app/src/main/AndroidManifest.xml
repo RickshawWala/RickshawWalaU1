@@ -20,10 +20,6 @@
         <activity
             android:name="com.aliv3.rickshawalauser.SplashActivity"
             android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name="com.aliv3.rickshawalauser.MapsActivity"
@@ -36,6 +32,10 @@
 
         <activity android:name="com.aliv3.rickshawalauser.RegisterActivity"
             android:label="@string/title_activity_register">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name="com.aliv3.rickshawalauser.ProfileActivity"
