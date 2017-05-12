@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -29,7 +28,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button Login;
     private EditText Email;
     private EditText Password;
-    private TextView Register;
+    private Button Register;
     private ProgressDialog ProgressDialog;
     private final OkHttpClient client = new OkHttpClient();
 
@@ -43,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Email = (EditText) findViewById(R.id.editsignemail);
         Password = (EditText) findViewById(R.id.editsignpassword);
         Login = (Button) findViewById(R.id.buttonlogin);
-        Register = (TextView) findViewById(R.id.textregister);
+        Register = (Button) findViewById(R.id.textregister);
         ProgressDialog = new ProgressDialog(this);
 
         Login.setOnClickListener(this);
@@ -85,14 +84,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if(view == Login){
             userLogin();
-            //Go to map after saving details
             Intent i = new Intent(LoginActivity.this, MapsActivity.class);
             startActivity(i);
             finish();
         }
-
-        if(view == Register)
-        {
+        if(view == Register) {
             startActivity(new Intent(this,RegisterActivity.class));
         }
     }

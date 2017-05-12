@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText Name;
     private EditText MobileNumber;
     private EditText Password;
-    private TextView Signin;
+    private Button Signin;
 
     //Database
     private DatabaseReference databaseReference;
@@ -53,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Password = (EditText) findViewById(R.id.editpassword);
         Name = (EditText) findViewById(R.id.editname);
         MobileNumber = (EditText) findViewById(R.id.editmobile);
-        Signin = (TextView) findViewById(R.id.textsignin);
+        Signin = (Button) findViewById(R.id.textsignin);
 
         ProgressDialog = new ProgressDialog(this);
 
