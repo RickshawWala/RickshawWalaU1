@@ -64,8 +64,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void registerUser() {
 
         String email = Email.getText().toString().trim();
-        String mobileNumber = Name.getText().toString().trim();
-        String name = MobileNumber.getText().toString().trim();
+        String name = Name.getText().toString().trim();
+        String mobileNumber = MobileNumber.getText().toString().trim();
         String password = Password.getText().toString().trim();
 
         if (TextUtils.isEmpty(email)) {
