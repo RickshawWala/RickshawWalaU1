@@ -30,7 +30,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
         String accessToken = Helper.getPreference("access_token");
         String username = Helper.getPreference("username");
@@ -47,6 +46,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         }
+
+        setContentView(R.layout.activity_login);
 
         Email = (EditText) findViewById(R.id.editsignemail);
         Password = (EditText) findViewById(R.id.editsignpassword);
