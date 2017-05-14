@@ -23,7 +23,7 @@ public class Helper {
     private static String POSTRegister = api + "/register";
     private static String GETUser = api + "/user";
 
-    public static SharedPreferences getSharedPreferencesInstance() {
+    private static SharedPreferences getSharedPreferencesInstance() {
         if(mInstance == null) {
             mInstance = PreferenceManager.getDefaultSharedPreferences(RickshawWalaUser.getAppContext());
         }
@@ -42,8 +42,13 @@ public class Helper {
         editor.putString(key, value);
         editor.apply();
     }
+
     public static String getPreference(String key) {
         return getSharedPreferencesInstance().getString(key, null);
+    }
+
+    public static void clearAllPreferences() {
+        getSharedPreferencesInstance().edit().clear().commit();
     }
 
     public static void postRegister(String name, final String email, String mobileNumber, final String password, Callback callback) throws IOException, IllegalArgumentException {
