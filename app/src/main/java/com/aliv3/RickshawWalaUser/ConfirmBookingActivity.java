@@ -1,4 +1,4 @@
-package com.aliv3.rickshawalauser;
+package com.aliv3.RickshawWalaUser;
 
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;

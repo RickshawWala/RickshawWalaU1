@@ -1,4 +1,4 @@
-package com.aliv3.rickshawalauser;
+package com.aliv3.RickshawWalaUser;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -43,9 +43,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        //print to log
-        System.out.println("\n\n\n\t\tREGISTER ACTIVITY \n\n\n");
 
         Register = (Button) findViewById(R.id.buttonregister);
         Email = (EditText) findViewById(R.id.editemail);
@@ -106,7 +103,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             finish();
         }
     }
-    private void postRegister(String name, String email, String mobileNumber, String password, String url) throws IOException, IllegalArgumentException {
+    private void postRegister(String name, final String email, String mobileNumber, final String password, String url) throws IOException, IllegalArgumentException {
         OkHttpClient client = new OkHttpClient();
 
         RequestBody formBody = new FormBody.Builder()
@@ -118,7 +115,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 .add("is_client", "true")
                 .build();
         Request request = new Request.Builder()
-                .url(url)
+                .url(Helper.POSTRegister)
                 .post(formBody)
                 .build();
 
@@ -147,7 +144,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             } else if(jsonObject.has("success")) {
                                 success = jsonObject.getString("success");
                             }
-                            uiHandle(error, success);
+                            uiHandle(error, success, email, password);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -155,7 +152,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 });
     }
 
-    private void uiHandle(final String error, final String success) {
+    private void uiHandle(final String error, final String success, final String email, final String password) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -164,7 +161,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 } else if (success != "") {
                     Toast.makeText(RegisterActivity.this, success, Toast.LENGTH_SHORT).show();
 
-                    //Go to map after saving details
+                    Helper.setPreference("username", email);
+                    Helper.setPreference("password", password);
+
                     Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                     startActivity(i);
                     finish();

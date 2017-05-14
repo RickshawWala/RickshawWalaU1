@@ -1,4 +1,4 @@
-package com.aliv3.rickshawalauser;
+package com.aliv3.RickshawWalaUser;
 
 import android.app.Activity;
 import android.content.Intent;

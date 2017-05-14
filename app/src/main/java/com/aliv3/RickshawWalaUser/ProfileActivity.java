@@ -1,4 +1,4 @@
-package com.aliv3.rickshawalauser;
+package com.aliv3.RickshawWalaUser;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,8 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import static android.support.design.R.styleable.View;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
