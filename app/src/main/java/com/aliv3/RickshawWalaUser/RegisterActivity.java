@@ -19,10 +19,6 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -84,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         ProgressDialog.show();
 
         try {
-            postRegister(name, email, mobileNumber, password, "http://139.59.70.223/api/register");
+            Helper.postRegister(name, email, mobileNumber, password, callback(email, password));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,53 +99,37 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             finish();
         }
     }
-    private void postRegister(String name, final String email, String mobileNumber, final String password, String url) throws IOException, IllegalArgumentException {
-        OkHttpClient client = new OkHttpClient();
-
-        RequestBody formBody = new FormBody.Builder()
-                .add("name", name)
-                .add("email", email)
-                .add("mobile_number", mobileNumber)
-                .add("password", password)
-                .add("is_driver", "false")
-                .add("is_client", "true")
-                .build();
-        Request request = new Request.Builder()
-                .url(Helper.POSTRegister)
-                .post(formBody)
-                .build();
-
-        client.newCall(request)
-                .enqueue(new Callback() {
+    private Callback callback(final String email, final String password) {
+        return new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onFailure(Call call, IOException e) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(RegisterActivity.this, "Connection Error", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        String jsonResponse = response.body().string();
-//                        Log.d("RESPONSE", jsonResponse);
-                        JSONObject jsonObject;
-                        try {
-                            jsonObject = new JSONObject(jsonResponse);
-                            String error = "", success = "";
-                            if(jsonObject.has("error")) {
-                                error = jsonObject.getString("error");
-                            } else if(jsonObject.has("success")) {
-                                success = jsonObject.getString("success");
-                            }
-                            uiHandle(error, success, email, password);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    public void run() {
+                        Toast.makeText(RegisterActivity.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String jsonResponse = response.body().string();
+//                        Log.d("RESPONSE", jsonResponse);
+                JSONObject jsonObject;
+                try {
+                    jsonObject = new JSONObject(jsonResponse);
+                    String error = "", success = "";
+                    if(jsonObject.has("error")) {
+                        error = jsonObject.getString("error");
+                    } else if(jsonObject.has("success")) {
+                        success = jsonObject.getString("success");
+                    }
+                    uiHandle(error, success, email, password);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
     }
 
     private void uiHandle(final String error, final String success, final String email, final String password) {
