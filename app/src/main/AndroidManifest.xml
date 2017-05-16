@@ -23,7 +23,7 @@
             android:theme="@style/SplashTheme">
         </activity>
 
-        <activity android:name="com.aliv3.RickshawWalaUser.MapsActivity"
+        <activity android:name="com.aliv3.RickshawWalaUser.RideActivity"
             android:label="@string/title_activity_maps">
         </activity>
 
@@ -43,12 +43,6 @@
             android:label="@string/title_activity_profile">
         </activity>
 
-        <activity android:name="com.aliv3.RickshawWalaUser.ConfirmBookingActivity"
-            android:label="@string/title_activity_confirm">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.aliv3.RickshawWalaUser.MapsActivity" />
-        </activity>
     </application>
 
 </manifest>

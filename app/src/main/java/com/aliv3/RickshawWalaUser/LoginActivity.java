@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         };
     }
     private void completeLogin() {
-        Intent i = new Intent(LoginActivity.this, MapsActivity.class);
+        Intent i = new Intent(LoginActivity.this, RideActivity.class);
         startActivity(i);
         finish();
     }

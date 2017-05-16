@@ -32,7 +32,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class RideActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private final int LOCATION_REQUEST_CODE = 2; //Can be any value, non zero
 
@@ -45,9 +45,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-
-        System.out.println("\n\n\n\t\tMAPS ACTIVITY \n\n\n");
+        setContentView(R.layout.activity_ride);
 
         askPermission(android.Manifest.permission.ACCESS_FINE_LOCATION, LOCATION_REQUEST_CODE);
 
@@ -63,15 +61,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        Button btnBookRide = (Button) findViewById(R.id.buttonBookRide);
-        btnBookRide.setOnClickListener(new View.OnClickListener() {
+        final Button buttonBookRide = (Button) findViewById(R.id.buttonRequestRide);
+        buttonBookRide.setText("Request Ride");
 
+        buttonBookRide.setVisibility(View.VISIBLE);
+
+        buttonBookRide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent iConfirmBookingActivity = new Intent(getBaseContext(), ConfirmBookingActivity.class);
-                startActivity(iConfirmBookingActivity);
+                /*Intent iConfirmBookingActivity = new Intent(getBaseContext(), ConfirmBookingActivity.class);
+                startActivity(iConfirmBookingActivity);*/
+                //Replacing fragments on frame_main using transactions
+                SrcDestFragment fragmentOperationWhat = new SrcDestFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction1.replace(R.id.frame_main, fragmentOperationWhat);
+                fragmentTransaction1.commit();
+
+                buttonBookRide.setVisibility(View.GONE);
+
             }
         });
+
     }
 
     @Override
@@ -115,7 +125,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(ContextCompat.checkSelfPermission(this, permission)!= PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
         } else {
-            Toast.makeText(this, "Permission is already granted", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Permission is already granted", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -138,6 +148,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -153,6 +164,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void onBackPressed() {
 
