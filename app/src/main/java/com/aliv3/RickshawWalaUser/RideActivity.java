@@ -61,7 +61,7 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        final Button buttonBookRide = (Button) findViewById(R.id.buttonRequestRide);
+        final Button buttonBookRide = (Button) findViewById(R.id.buttonConfirmRide);
         buttonBookRide.setText("Request Ride");
 
         buttonBookRide.setVisibility(View.VISIBLE);
@@ -89,13 +89,16 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         mGoogleMap = googleMap;
 
         //Set specific loation (lat, long)
-        /*LatLng mlore = new LatLng(12.9108, 74.8986);
+/*      LatLng mlore = new LatLng(12.9108, 74.8986);
         mGoogleMap.addMarker(new MarkerOptions().position(mlore).title("Pointer"));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(mlore));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mlore, 18.0f));
 */        //Get current GPS location of user/device
         LatLng curLoc = new LatLng(latitude, longitude);
-        mGoogleMap.addMarker(new MarkerOptions().position(curLoc).title("Pick up Location").draggable(true)
+        mGoogleMap.addMarker(new MarkerOptions()
+                .position(curLoc)
+                .title("Pick up Location")
+                .draggable(true)
                 .icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.loc_marker))));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(curLoc));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curLoc , 18.0f));
