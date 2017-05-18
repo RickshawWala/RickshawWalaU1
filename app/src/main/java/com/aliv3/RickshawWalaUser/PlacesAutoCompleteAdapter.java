@@ -39,7 +39,7 @@ public class PlacesAutoCompleteAdapter extends ArrayAdapter<String> implements
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
-    ;
+
     private ArrayList<String> resultList = new ArrayList<String>();
 
     public PlacesAutoCompleteAdapter(Context context, int textViewResourceId) {

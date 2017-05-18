@@ -37,8 +37,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        askPermission(android.Manifest.permission.ACCESS_FINE_LOCATION, LOCATION_REQUEST_CODE);
-
         String accessToken = Helper.getPreference("access_token");
         String username = Helper.getPreference("username");
         String password = Helper.getPreference("password");
@@ -56,6 +54,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         setContentView(R.layout.activity_login);
+
+        askPermission(android.Manifest.permission.ACCESS_FINE_LOCATION, LOCATION_REQUEST_CODE);
 
         Email = (EditText) findViewById(R.id.editsignemail);
         Password = (TextInputLayout) findViewById(R.id.editsignpassword);
