@@ -22,6 +22,7 @@ public class Helper {
     public static String POSTRefreshToken = api + "/auth/refresh";
     private static String POSTRegister = api + "/register";
     private static String GETUser = api + "/user";
+    private static String POSTRideCreate = api + "/ride/create";
 
     private static SharedPreferences getSharedPreferencesInstance() {
         if(mInstance == null) {
@@ -115,6 +116,24 @@ public class Helper {
                 .url(GETUser)
                 .addHeader("Accept", "application/json")
                 .get()
+                .build();
+
+        client.newCall(request)
+                .enqueue(callback);
+    }
+
+    public static void postRideCreate(final String originLatitude, final String originLongitude, final String destinationLatitude, final String destinationLongitude, Callback callback) throws IOException, IllegalArgumentException {
+        OkHttpClient client = Helper.getOkHttpClientInstance();
+
+        RequestBody formBody = new FormBody.Builder()
+                .add("origin_latitude", originLatitude)
+                .add("origin_longitude", originLongitude)
+                .add("destination_latitude", destinationLatitude)
+                .add("destination_longitude", destinationLongitude)
+                .build();
+        Request request = new Request.Builder()
+                .url(POSTRideCreate)
+                .post(formBody)
                 .build();
 
         client.newCall(request)
