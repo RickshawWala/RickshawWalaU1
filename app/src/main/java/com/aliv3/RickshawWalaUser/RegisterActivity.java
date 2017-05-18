@@ -81,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         ProgressDialog.show();
 
         try {
-            Helper.postRegister(name, email, mobileNumber, password, callback(email, password));
+            Helper.postRegisterUser(name, email, mobileNumber, password, callback(email, password));
         } catch (IOException e) {
             e.printStackTrace();
         }
