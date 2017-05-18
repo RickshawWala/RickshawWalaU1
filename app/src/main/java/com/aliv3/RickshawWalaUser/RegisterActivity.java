@@ -3,6 +3,7 @@ package com.aliv3.RickshawWalaUser;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -27,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText Email;
     private EditText Name;
     private EditText MobileNumber;
-    private EditText Password;
+    private TextInputLayout Password;
     private Button Signin;
 
     //Database
@@ -42,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         Register = (Button) findViewById(R.id.buttonregister);
         Email = (EditText) findViewById(R.id.editemail);
-        Password = (EditText) findViewById(R.id.editpassword);
+        Password = (TextInputLayout) findViewById(R.id.editpassword);
         Name = (EditText) findViewById(R.id.editname);
         MobileNumber = (EditText) findViewById(R.id.editmobile);
         Signin = (Button) findViewById(R.id.textsignin);
@@ -58,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String email = Email.getText().toString().trim();
         String name = Name.getText().toString().trim();
         String mobileNumber = MobileNumber.getText().toString().trim();
-        String password = Password.getText().toString().trim();
+        String password = Password.getEditText().getText().toString().trim();
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Please Enter your EmailID", Toast.LENGTH_SHORT).show();

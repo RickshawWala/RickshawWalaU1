@@ -49,6 +49,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonGoToMap"
         android:text="Maps"
+        android:textColor="#ffffff"
         android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

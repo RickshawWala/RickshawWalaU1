@@ -2,7 +2,6 @@ package com.aliv3.RickshawWalaUser;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,14 +11,12 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -34,20 +31,30 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class RideActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private final int LOCATION_REQUEST_CODE = 2; //Can be any value, non zero
-
     private GoogleMap mGoogleMap;
     private GPSTracker gpsTracker;
     private Location mLocation;
     double latitude, longitude;
     boolean doubleBackToExitPressedOnce = false;
+    AutoCompleteTextView destination;
+    private PlacesAutoCompleteAdapter placesAutoCompleteAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride);
 
-        askPermission(android.Manifest.permission.ACCESS_FINE_LOCATION, LOCATION_REQUEST_CODE);
+        /*
+        * PlacesAutoCompleteAdapter is used to get the suggestion form google map api.
+        *
+        *
+        * */
+        placesAutoCompleteAdapter = new PlacesAutoCompleteAdapter(getApplicationContext(),
+                R.layout.autocomplete_list_text);
+
+        destination = (AutoCompleteTextView) findViewById(R.id.destination);
+        //setting the adapter for auto completion
+        destination.setAdapter(placesAutoCompleteAdapter);
 
         gpsTracker = new GPSTracker(getApplicationContext());
         mLocation = gpsTracker.getLocation();
@@ -69,19 +76,16 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         buttonBookRide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent iConfirmBookingActivity = new Intent(getBaseContext(), ConfirmBookingActivity.class);
-                startActivity(iConfirmBookingActivity);*/
                 //Replacing fragments on frame_main using transactions
-                SrcDestFragment fragmentOperationWhat = new SrcDestFragment();
-                android.support.v4.app.FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction1.replace(R.id.frame_main, fragmentOperationWhat);
-                fragmentTransaction1.commit();
+                SrcDestFragment fragmentOperationSrcDest = new SrcDestFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame_main, fragmentOperationSrcDest);
+                fragmentTransaction.commit();
 
                 buttonBookRide.setVisibility(View.GONE);
 
             }
         });
-
     }
 
     @Override
@@ -124,27 +128,6 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         return returnedBitmap;
     }
 
-    private void askPermission (String permission, int requestCode) {
-        if(ContextCompat.checkSelfPermission(this, permission)!= PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
-        } else {
-            //Toast.makeText(this, "Permission is already granted", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case LOCATION_REQUEST_CODE:
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    //Toast.makeText(this, "Location permission granted!", Toast.LENGTH_SHORT).show();
-                } else {
-                    //Toast.makeText(this, "Location permission denied!", Toast.LENGTH_SHORT).show();
-                }
-                break;
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -160,8 +143,7 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.myprofile:
                 startActivity(new Intent(this, ProfileActivity.class));
                 return true;
-            case R.id.ratecard:
-                return true;
+
             case R.id.settings:
                 return true;
         }
@@ -185,5 +167,7 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
                 doubleBackToExitPressedOnce=false;
             }
         }, 2000);
+
+        finish();
     }
 }

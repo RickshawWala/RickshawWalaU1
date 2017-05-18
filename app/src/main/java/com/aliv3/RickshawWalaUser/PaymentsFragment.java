@@ -1,6 +1,7 @@
 package com.aliv3.RickshawWalaUser;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -43,10 +44,12 @@ public class PaymentsFragment extends Fragment {
         buttonGoToMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Button buttonRequestRide = (Button) getActivity().findViewById(R.id.buttonGoToMap);
+                /*Button buttonRequestRide = (Button) getActivity().findViewById(R.id.buttonGoToMap);
                 buttonRequestRide.setVisibility(View.VISIBLE);
 
-                getFragmentManager().beginTransaction().remove(PaymentsFragment.this).commitAllowingStateLoss();
+                getFragmentManager().beginTransaction().remove(PaymentsFragment.this).commitAllowingStateLoss();*/
+                Intent intent = new Intent(getActivity(), RideActivity.class);
+                startActivity(intent);
             }
         });
 
