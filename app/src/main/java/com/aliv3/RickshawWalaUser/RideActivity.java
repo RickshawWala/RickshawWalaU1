@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,12 +30,23 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 public class RideActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mGoogleMap;
     private GPSTracker gpsTracker;
     private Location mLocation;
-    double latitude, longitude;
+    double originLatitude, originLongitude;
+    double destinationLatitude, destinationLongitude;
     boolean doubleBackToExitPressedOnce = false;
     AutoCompleteTextView destination;
     private PlacesAutoCompleteAdapter placesAutoCompleteAdapter;
@@ -46,8 +58,7 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         /*
         * PlacesAutoCompleteAdapter is used to get the suggestion form google map api.
-        *
-        *
+
         * */
         placesAutoCompleteAdapter = new PlacesAutoCompleteAdapter(getApplicationContext(),
                 R.layout.autocomplete_list_text);
@@ -56,13 +67,29 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         //setting the adapter for auto completion
         destination.setAdapter(placesAutoCompleteAdapter);
 
+        destination.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+            if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                try {
+                    Helper.getLatLongFromPlaceId(destination.getText().toString(), callback());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+//                Log.d("eee", destination.getText().toString());
+            }
+            return false;
+            }
+        });
+
         gpsTracker = new GPSTracker(getApplicationContext());
         mLocation = gpsTracker.getLocation();
 
         if(mLocation!= null){
-            latitude = mLocation.getLatitude();
-            longitude = mLocation.getLongitude();
+            originLatitude = mLocation.getLatitude();
+            originLongitude = mLocation.getLongitude();
         }
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -77,7 +104,14 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
                 //Replacing fragments on frame_main using transactions
+                Bundle bundle = new Bundle();
+                bundle.putDouble("destLat", destinationLatitude);
+                bundle.putDouble("destLong", destinationLongitude);
+                bundle.putDouble("originLat", originLatitude);
+                bundle.putDouble("originLong", originLongitude);
+
                 SrcDestFragment fragmentOperationSrcDest = new SrcDestFragment();
+                fragmentOperationSrcDest.setArguments(bundle);
                 android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.frame_main, fragmentOperationSrcDest);
                 fragmentTransaction.commit();
@@ -98,7 +132,7 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(mlore));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mlore, 18.0f));
 */        //Get current GPS location of user/device
-        LatLng curLoc = new LatLng(latitude, longitude);
+        LatLng curLoc = new LatLng(originLatitude, originLongitude);
         mGoogleMap.addMarker(new MarkerOptions()
                 .position(curLoc)
                 .title("Pick up Location")
@@ -155,7 +189,7 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
-            return;
+            finish();
         }
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
@@ -169,5 +203,30 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         }, 2000);
 
         finish();
+    }
+
+    private Callback callback() {
+        return new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String jsonResponse = response.body().string();
+                if (response.isSuccessful()) {
+//                    Log.d("RESPONSE", );
+                    try {
+                        JSONArray results = new JSONObject(jsonResponse).getJSONArray("results");
+                        JSONObject location = results.getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
+                        destinationLatitude = location.getDouble("lat");
+                        destinationLongitude = location.getDouble("lng");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
     }
 }

@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,10 +28,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText MobileNumber;
     private TextInputLayout Password;
     private Button Signin;
-
-    //Database
-    private DatabaseReference databaseReference;
-
     private ProgressDialog ProgressDialog;
 
     @Override

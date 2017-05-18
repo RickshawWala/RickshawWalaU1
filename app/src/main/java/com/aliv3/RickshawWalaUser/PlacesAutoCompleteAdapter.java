@@ -40,6 +40,8 @@ public class PlacesAutoCompleteAdapter extends ArrayAdapter<String> implements
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
 
+    private String placeId;
+
     private ArrayList<String> resultList = new ArrayList<String>();
 
     public PlacesAutoCompleteAdapter(Context context, int textViewResourceId) {
@@ -105,9 +107,9 @@ public class PlacesAutoCompleteAdapter extends ArrayAdapter<String> implements
             sb.append("?sensor=false&key=" + PLACES_AUTOCOMPLETE_API_KEY);
             sb.append("&components=country:IN");
 
-            // sb.append("&location=" + BeanLocation.getLocation().getLatitude()
-            // + "," + BeanLocation.getLocation().getLongitude());
-            // sb.append("&radius=500");
+            /*sb.append("&location=" + BeanLocation.getLocation().getLatitude()
+                        + "," + BeanLocation.getLocation().getLongitude());
+            sb.append("&radius=500");*/
             sb.append("&input=" + URLEncoder.encode(input, "utf8"));
 
             URL url = new URL(sb.toString());
@@ -134,9 +136,13 @@ public class PlacesAutoCompleteAdapter extends ArrayAdapter<String> implements
 
         try {
             // Create a JSON object hierarchy from the results
-            System.out.println(jsonResults.toString());
+            //
+//            Log.d("JSON Response", jsonResults.toString());
             JSONObject jsonObj = new JSONObject(jsonResults.toString());
             JSONArray predsJsonArray = jsonObj.getJSONArray("predictions");
+            JSONObject item = predsJsonArray.getJSONObject(0);
+//            Log.d("JSON OUT", item.getString("description"));
+//            Log.d("JSON OUT", item.getString("id"));
 
             // Extract the Place descriptions from the results
             resultList.clear();
@@ -150,4 +156,5 @@ public class PlacesAutoCompleteAdapter extends ArrayAdapter<String> implements
 
         return resultList;
     }
+
 }

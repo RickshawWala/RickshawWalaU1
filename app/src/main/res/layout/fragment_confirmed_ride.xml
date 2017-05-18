@@ -6,30 +6,33 @@
     android:background="#ffffff"
     tools:context="com.aliv3.RickshawWalaUser.ConfirmedRideFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textRideConfirmed"
-        android:text="Confirmed ride confirmed"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonFinishRide"
-        android:text="Ride status"
-        android:layout_below="@+id/textRideConfirmed"
+        android:id="@+id/textFinishRide"
+        android:text="Ride Status:"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textRideStatus"
+        android:text="Ride Created"
+        android:textSize="40dp"
+        android:layout_below="@+id/textFinishRide"
         android:gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="60dp"/>
 
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Stop"
-        android:id="@+id/buttonOkay"
+        android:id="@+id/buttonStop"
         android:textColor="#FFFFFF"
         android:background="#BC5127"
         android:layout_marginBottom="53dp"
@@ -37,7 +40,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="60dp"
-        android:layout_marginStart="60dp" />
+        android:layout_marginStart="60dp"
+        android:visibility="gone"/>
 
     <Button
         android:layout_width="100dp"
@@ -46,11 +50,9 @@
         android:id="@+id/buttonPay"
         android:textColor="#FFFFFF"
         android:background="#BC412B"
-        android:layout_alignBaseline="@+id/buttonOkay"
-        android:layout_alignBottom="@+id/buttonOkay"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="60dp"
-        android:layout_marginBottom="53dp"/>
+        android:layout_marginBottom="77dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>

@@ -9,50 +9,89 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textPayBy"
-        android:text="Pay by:"
+        android:id="@+id/textFareIs"
+        android:text="The Ride fare is:"
+        android:textSize="20sp"
         android:gravity="center_horizontal"
-        android:layout_marginTop="20dp"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/getFareIs"
+        android:text="getFare"
+        android:textSize="30sp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="104dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textFinishRide1"
+        android:text="Ride Status:"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_marginTop="79dp"
+        android:layout_below="@+id/getFareIs"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-    <ImageButton
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textRideStatus1"
+        android:text="Payment Pending"
+        android:textSize="40dp"
+        android:gravity="center"
+        android:layout_marginTop="71dp"
+        android:layout_alignTop="@+id/textFinishRide1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <!--<ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonCash"
         android:src="@drawable/payment_cash"
         android:background="#00FFFFFF"
-        android:layout_below="@+id/textPayBy"
+        android:layout_below="@+id/getFareIs"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="59dp" />-->
 
-    <TextView
+    <!--<TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textOr"
         android:text="OR"
-        android:layout_below="@+id/buttonCash"
-        android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:layout_marginTop="10dp"/>
-
-    <ImageButton
+        android:layout_above="@+id/buttonPaytm"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11dp" />
+-->
+    <!--<ImageButton
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:id="@+id/buttonPaytm"
         android:src="@drawable/payment_paytm"
         android:background="#00FFFFFF"
-        android:layout_below="@+id/textOr"
+        android:layout_above="@+id/buttonCloseApp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginBottom="42dp" />-->
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonGoToMap"
-        android:text="Maps"
+        android:id="@+id/buttonCloseApp"
+        android:text="Close App"
         android:textColor="#ffffff"
         android:background="@color/colorPrimary"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="48dp"/>
 
 </RelativeLayout>
